@@ -1,6 +1,10 @@
 {
   "packages": {
-"mypackage":{
-"path":"./packages/mypackage"
-}}
+    "less-bootstrap-3": {},
+    "less-fontawesome-4": {},
+    "mypackage": {
+      "path": "./packages/mypackage"
+    }
+    
+  }
 }
