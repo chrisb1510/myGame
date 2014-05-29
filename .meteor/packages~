@@ -4,17 +4,7 @@
 # but you can also edit it by hand.
 
 standard-app-packages
+insecure
 coffeescript
-coffeescript-test-helper
-
-less
-less-fontawesome-4
-less-bootstrap-3
-
 munit
-
-accounts-ui
-accounts-password
-
-main
-myUsers
+coffeescript-test-helper
