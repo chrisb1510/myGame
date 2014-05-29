@@ -2,7 +2,12 @@
   "packages": {
     "less-bootstrap-3": {},
     "less-fontawesome-4": {},
-    "munit":{}
-    
+    "munit":{},
+    "main":{
+      "path": "packages/main"
+    },
+    "myUsers":{
+      "path": "packages/myUsers"
+    }
   }
 }
