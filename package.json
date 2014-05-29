@@ -4,7 +4,7 @@
   "description": "My uni hnd project. Meteor with local packages and testing.",
   "main": "main.html",
   "directories": {
-    "test": "tests",
+    
     "main": "main",
     "myUsers": "myUsers"
   },
