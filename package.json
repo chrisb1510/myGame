@@ -9,6 +9,8 @@
     "myUsers": "myUsers"
   },
   "scripts": {
+    "install":"mrt install",
+    "run": "meteor",
     "test": "meteor test-packages main myUsers"
   },
   "repository": {
