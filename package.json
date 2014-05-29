@@ -8,13 +8,13 @@
     "main": "main",
     "myUsers": "myUsers"
   },
-  "devDependencies":{
+  "Dependencies":{
     "coffee-script":"latest"
   },
   "scripts": {
-    "install":"mrt install",
+    "install":"mrt install ",
     "run": "meteor",
-    "test": "meteor test-packages main myUsers"
+    "test": "meteor test-packages packages/main packages/myUsers"
   },
   "repository": {
     "type": "git",
