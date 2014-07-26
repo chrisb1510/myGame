@@ -3,12 +3,21 @@
 </head>
 
 <body>
+{{> loginSection}}
   {{> hello}}
+{{>camera}}
 </body>
 
 <template name="hello">
 	
   <h1>Hello World!</h1>
+  
   {{greeting}}
   <input id="tester" type="button" value="Click" />
+</template>
+
+<template name="camera">
+<video autoplay></video><img />
+<canvas style="display:none"></canvas>	
+<input id="snapshot" type="button" value="snapshot" />
 </template>

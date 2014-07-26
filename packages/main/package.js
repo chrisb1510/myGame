@@ -7,7 +7,7 @@ Package.on_use(function (api, where) {
 
 	api.use('standard-app-packages', both);
 	api.use('templating', 'client');
-    api.use('handlebars', 'client');
+    
 	
 	api.use('less');
 	api.use('coffeescript');

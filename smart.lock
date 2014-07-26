@@ -3,18 +3,46 @@
   "dependencies": {
     "basePackages": {
       "less-bootstrap-3": {},
-      "less-fontawesome-4": {}
+      "less-fontawesome-4": {},
+      "munit": {},
+      "modernizr-meteor": {},
+      "pixijs": {}
     },
     "packages": {
       "less-bootstrap-3": {
         "git": "https://github.com/DerMambo/less-bootstrap-3.git",
-        "tag": "v0.0.1",
-        "commit": "1321ac0ebc809bc354186b96f4c28b7042e38507"
+        "tag": "v0.0.2",
+        "commit": "b5010b2ff9e9ae6b0e6e13eb0f6c81c9cb84373e"
       },
       "less-fontawesome-4": {
         "git": "https://github.com/DerMambo/less-fontawesome-4.git",
+        "tag": "v0.0.4",
+        "commit": "79fdf3d3e90fdb4635878b34f545965014cd4ea8"
+      },
+      "munit": {
+        "git": "https://github.com/spacejamio/meteor-munit.git",
+        "tag": "v0.2.0",
+        "commit": "9fbf742c3ea863d9d37f608d58f8fda646c01b2c"
+      },
+      "modernizr-meteor": {
+        "git": "https://github.com/ckir/modernizr-meteor.git",
+        "tag": "v2.6.2",
+        "commit": "391ca2a3beff3cd2b0e1099cb2d744b5a2e8a73e"
+      },
+      "pixijs": {
+        "git": "https://github.com/foxdog-studios/meteor-pixijs",
         "tag": "v0.0.1",
-        "commit": "f40d8d5e0794325aedddd4aeedd1e9cfb47ca133"
+        "commit": "5b69d345dc99204d1569c31b693ad6ac395e5cf2"
+      },
+      "chai": {
+        "git": "https://github.com/spacejamio/meteor-chai.git",
+        "tag": "v0.1.5",
+        "commit": "9c8f1f769839c946f11f580b8c6f8601f9286a66"
+      },
+      "sinon": {
+        "git": "https://github.com/spacejamio/meteor-sinon.git",
+        "tag": "v0.1.5",
+        "commit": "5078abefbfc67a6c4c19f628ceba4249b84b4e07"
       }
     }
   }

@@ -1,4 +1,4 @@
-class share.User
+class User
 	#added share from meteor for package scope.
 	#constructor assigns name
 	constructor: (@name) ->

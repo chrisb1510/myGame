@@ -2,8 +2,8 @@ class mySuite
   
   name: "mytests"
   should = chai.should()
-  user = new share.User
-  user2 = new share.User("UserName")
+  user = new User()
+  user2 = new User("UserName")
   
   suiteSetup: ()->
 

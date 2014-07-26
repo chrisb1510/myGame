@@ -1,6 +1,9 @@
 {
   "packages": {
     "less-bootstrap-3": {},
-    "less-fontawesome-4": {}
+    "less-fontawesome-4": {},
+    "munit": {},
+    "modernizr-meteor": {},
+    "pixijs": {}
   }
 }
