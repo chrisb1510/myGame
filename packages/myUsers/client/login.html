@@ -1,0 +1,10 @@
+<template name="loginSection">
+
+	<section id="login">
+		{{> loginButtons}}
+			{{#if currentUser}}
+				{{currentUser.profile.login}}
+			{{/if}}
+</section>
+</template>
+
