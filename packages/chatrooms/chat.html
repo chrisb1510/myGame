@@ -1,0 +1,28 @@
+<template name="Mainchatroom">
+{{> chatmessages}}	
+{{> entry}}
+</template>
+
+<template name="chatmessages">
+<div id="msglist">
+	{{#each mainchatmessages}}
+		{{> chatPost}}
+	{{/each}}
+	</div>
+</template>
+
+<template name="entry">
+<div>
+		<input id="name" type="txtbox"/>
+		<input type="txtbox" id="chatText" /> 
+		<input id="chatSubmit" type="button" value="post" />
+</div>
+</template>
+
+<template name="chatPost">
+
+<strong>{{name}}:</strong>{{chatPosted}}<br>
+
+</template>
+
+<template name="Gamechatroom"></template>
