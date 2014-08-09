@@ -3,18 +3,21 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
+  api.use('underscore');
+  api.use('ejson');
   api.use('coffeescript');
-  api.add_files('chat.html',['client']);
   api.use('templating', 'client');
   api.use('handlebars', 'client');
-  api.add_files('chatrooms.coffee', ['client', 'server']);
-  
-  api.export('Mainchatmessages');
+  api.use('pixijs');
+  api.export('testplayer',['client','server'])
+  api.add_files('lib/collections.coffee',['client','server']);
+  api.add_files('Server/chatroom_Server.coffee',['server']);
+  api.add_files('Public/chat.html',['client']);
+  api.add_files('Client/chatrooms_Client.coffee', ['client']);
+
 });
 
 Package.on_test(function (api) {
   api.use('coffeescript');
   api.use('chatrooms');
-
-  api.add_files('chatrooms_tests.js', ['client', 'server']);
 });
