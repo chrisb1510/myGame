@@ -17,7 +17,6 @@
 class @Player
     constructor:(xconnection)->
         @userId  = Random.id()
-        
         @name = "anon"
         @ingame = false
         @currentroom = "main"

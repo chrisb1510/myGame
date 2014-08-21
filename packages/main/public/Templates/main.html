@@ -1,23 +1,47 @@
 <head>
-  <title>myGame</title>
+    <title>myGame</title>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+    </style>
 </head>
 
 <body>
-{{> loginButtons}}
-  {{> hello}}
-  {{> pixi}}
-  {{> Mainchatroom}}
+    {{> gyro}}
+    <!--{{> loginButtons}}
+    {{> hello}}
+    {{> pixi}}
+    {{> Mainchatroom}}-->
 </body>
 
 <template name="hello">
-	
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input id="tester" type="button" value="Click" />
+
+    <h1>Hello World!</h1>
+    {{greeting}}
+    <input id="tester" type="button" value="Click" />
 </template>
 <template name="pixi">
-<div id="pixistage" style="
-    height: 620PX;
-    width: 480PX;
-"></div>
+    <div id="pixistage">
+        {{game}}
+    </div>
+
+</template>
+<template name="board">
+
+</template>
+<template name="tapper">
+
+</template>
+<template name="controller">
+
+</template>
+<template name ="gyro">
+    <div id="gyrocontainer">
+        <div id="output"></div>
+        <div id="tiltdisplay">
+
+        </div>
+    </div>
 </template>

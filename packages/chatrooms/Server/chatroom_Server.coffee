@@ -5,8 +5,8 @@ if Meteor.isServer
         Players.remove({})
     #publish the collections as above. This lets users see the collecti    #should be only published to server
     Meteor.onConnection (connection)->
-        x = addplayer(connection)
-        @userId = x
+        x = Meteor.call "addplayer",connection
+        
         connection.onClose ->
             removeplayer(connection)
 
@@ -39,19 +39,12 @@ if Meteor.isServer
         createaroom:(player)->
             if Rooms.find({"room.owner":player.userId}).count() is 0
                 Rooms.insert new Room(player.userId)
-        setUserId: (userId)->
-            @.setUserId userId 
-   
-
-
-
-            
-addplayer = (connection)->
-    player = new Player(connection)
-    Players.insert player, (err,userId)->
-        if userId?
-            console.log ""+Players.find().count()+":"+userId
-            return userId
+        addplayer : (connection)->
+            player = new Player(connection)
+            Players.insert player, (err,userId)->
+                if userId?
+                    console.log ""+Players.find().count()+":"+userId
+                    return userId
 
     
 removeplayer = (connection) ->
@@ -59,11 +52,3 @@ removeplayer = (connection) ->
     console.log connection.id
     console.log Players.find().count()
     
-
-
-
-
-        
-        
-        
-

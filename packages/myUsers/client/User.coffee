@@ -1,5 +1,4 @@
-class User
-	#added share from meteor for package scope.
+class @User
 	#constructor assigns name
 	constructor: (@name) ->
 		@password = "password"

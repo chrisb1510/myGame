@@ -1,7 +1,7 @@
 {
   "packages": {
     "less-bootstrap-3": {},
-    "less-fontawesome-4": {},
-    "phaserio": {}
+    "less-fontawesome-4": {}
+    
   }
 }
