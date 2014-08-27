@@ -1,12 +1,30 @@
 ﻿(function() {
-  var prof, ser,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  if (Meteor.isClient) {
+    this.addplayer = function() {
+      var myuser;
+      myuser = new User(auser);
+      Accounts.createUser(myuser, function(err) {
+        if (err != null) {
+          return console.log("error : " + err);
+        }
+      });
+      console.log(myuser);
+      return Meteor.call("insertplayer", myuser, function(err, res) {
+        if (res != null) {
+          return console.log("result!: " + res);
+        }
+      });
+    };
+    Meteor.subscribe('myusers');
+  }
 
   this.Boards = new Meteor.Collection('boards');
 
-  this.Players = new Meteor.Collection('players');
+  this.Users = new Meteor.Collection('myusers');
 
-  prof = {
+  this.prof = {
     name: "bob",
     avatar: "",
     totaltokens: 3,
@@ -17,7 +35,7 @@
     currentroom: "main"
   };
 
-  ser = {
+  this.auser = {
     username: "acdefgh",
     password: "hello",
     profile: prof
@@ -25,11 +43,11 @@
 
   this.Profile = (function() {
     function Profile(params) {
-      var type, _ref, _ref1;
+      var _ref, _ref1;
       if (params == null) {
         params = {};
       }
-      type = "Profile";
+      this.type = "Profile";
       console.log(params);
       this.name = (_ref = params.name) != null ? _ref : "anon";
       this.avatar = (params.avatar != null) || null;
@@ -45,8 +63,8 @@
 
   })();
 
-  this.Player = (function() {
-    function Player(params) {
+  this.User = (function() {
+    function User(params) {
       var _ref, _ref1;
       if (params == null) {
         params = {};
@@ -54,23 +72,24 @@
       this.getGamestats = __bind(this.getGamestats, this);
       this.addTokens = __bind(this.addTokens, this);
       this.changeName = __bind(this.changeName, this);
+      this.type = "User";
       console.log("usercon: " + params);
-      this.password = (_ref = params.password) != null ? _ref : "1234";
-      this.username = (_ref1 = params.username) != null ? _ref1 : "12345";
-      this.profile = params;
+      this.username = (_ref = params.username) != null ? _ref : "12345";
+      this.password = (_ref1 = params.password) != null ? _ref1 : "1234";
+      this.profile = params.profile;
     }
 
-    Player.prototype.changeName = function(newName) {
+    User.prototype.changeName = function(newName) {
       this.profile.name = newName;
       return console.log("Hello" + this.profile.name);
     };
 
-    Player.prototype.addTokens = function(number) {
+    User.prototype.addTokens = function(number) {
       this.profile.totaltokens += number;
       return console.log("you now have " + this.profile.totaltokens);
     };
 
-    Player.prototype.getGamestats = function(which) {
+    User.prototype.getGamestats = function(which) {
       switch (which) {
         case "both":
           return console.log("wins: " + this.profile.gamestats.won + ", losses " + this.profile.gamestats.lost);
@@ -81,14 +100,8 @@
       }
     };
 
-    return Player;
+    return User;
 
   })();
-
-  this.myprof = new Profile(prof);
-
-  console.log(myprof);
-
-  this.myuser = new User(myprof);
 
 }).call(this);

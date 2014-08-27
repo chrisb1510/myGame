@@ -7,13 +7,14 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   var both = ['client', 'server']
+  api.use('ejson');
   api.use('coffeescript');
   api.use('accounts-ui');
   
   api.add_files('client/myUsers.coffee','server' );
   api.add_files('client/User.coffee','server');
 
-  api.export('User');
+  
 //export package when 
 });
 

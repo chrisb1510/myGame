@@ -1,5 +1,3 @@
-class mypackage 
-
 if Meteor.isClient
   Template.hello.greeting = ->
     "Welcome to My Game."

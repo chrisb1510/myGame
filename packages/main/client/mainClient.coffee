@@ -1,7 +1,8 @@
 if Meteor.isClient
+    
 	Template.hello.greeting = ->
     	"Welcome to My Game."
-
+    
   	Template.hello.events = "click input": ->
     	window.alert "You pressed the button"
     	return
@@ -21,8 +22,9 @@ if Meteor.isClient
 
 tiltListener = (LR,FB,compass) ->
     
-    ball  = $ "#ball"
-    cont = $ "#gyrocontainer"
+    ball = document.getElementById 'tiltdisplay'
+    console.log ball
+    cont = document.getElementById 'gyrocontainer'
    
     viewWidth = cont.offsetWidth
     viewHeight = cont.offsetHeight
