@@ -8,7 +8,6 @@ if Meteor.isServer
     
     Meteor.methods
         insertplayer:(user)->
-            
             Users.insert user, (err,res)->
                 if err?
                     console.log "#{ err }"

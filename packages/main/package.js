@@ -6,6 +6,8 @@ Package.on_use(function (api, where) {
     var both = ['client', 'server'];
 
     api.use('coffeescript');
+    api.use('underscore', both);
+    api.use('ejson', ['client', 'server']);
     api.use('templating', 'client');
 	api.use('jquery');
 	api.use('less');
