@@ -1,11 +1,89 @@
 ﻿(function() {
-  var prof1;
+  this.Boards = new Meteor.Collection('myboards', {
+    transform: function(doc) {
+      return new Board(doc);
+    }
+  });
+
+  Boards.allow({
+    insert: function(doc) {
+      return true;
+    },
+    update: function(doc) {
+      return true;
+    },
+    remove: function(doc) {
+      return true;
+    }
+  });
+
+  this.Users = new Meteor.Collection('myusers', {
+    transform: function(doc) {
+      return new User(doc);
+    }
+  });
+
+  Users.allow({
+    insert: function(doc) {
+      return true;
+    },
+    update: function(doc) {
+      return true;
+    },
+    remove: function(doc) {
+      return true;
+    }
+  });
+
+  this.Messages = new Meteor.Collection('chatmessages', {
+    transform: function(doc) {
+      return new Chatmessage(doc);
+    }
+  });
+
+  Messages.allow({
+    insert: function(doc) {
+      return true;
+    },
+    update: function(doc) {
+      return true;
+    },
+    remove: function(doc) {
+      return true;
+    }
+  });
+
+  this.Players = new Meteor.Collection('myplayers', {
+    transform: function(doc) {
+      return new Player(doc);
+    }
+  });
+
+  Players.allow({
+    insert: function() {
+      return true;
+    },
+    update: function() {
+      return true;
+    },
+    remove: function() {
+      return true;
+    }
+  });
 
   this.Player = (function() {
-    function Player(options) {
+    function Player(_arg) {
       var _ref;
-      this.typeName = "Player";
-      this.name = (options != null ? (_ref = options.name) != null ? _ref.valueOf() : void 0 : void 0) || "anon";
+      _ref = _arg != null ? _arg : {}, this.number = _ref.number, this.name = _ref.name;
+      if (this.typeName == null) {
+        this.typeName = "Player";
+      }
+      if (this.number == null) {
+        this.number = "n/a";
+      }
+      if (this.name == null) {
+        this.name = "anon";
+      }
     }
 
     Player.prototype.clone = function() {
@@ -25,85 +103,100 @@
 
     Player.prototype.toJSONValue = function() {
       return {
+        _id: this._id,
         typeName: this.typeName,
-        name: this.name
+        name: this.name,
+        number: this.number
       };
     };
+
+    EJSON.addType("Player", function(value) {
+      console.log(value);
+      return new Player(value);
+    });
 
     return Player;
 
   })();
 
-  EJSON.addType("Player", function(value) {
-    console.log(value);
-    return new Player(value);
-  });
-
-  this.tester = (function() {
-    var defaults;
-
-    defaults = {
-      typeName: "tester",
-      name: "anon"
-    };
-
-    function tester(options) {
-      switch (options != null) {
-        case true:
-          this.name = options.name, this.typeName = options.typeName;
-          break;
-        case false:
-          this.name = defaults.name, this.typeName = defaults.typeName;
+  this.Chatmessage = (function() {
+    function Chatmessage(_arg) {
+      var _ref;
+      _ref = _arg != null ? _arg : {}, this.created = _ref.created, this.owner = _ref.owner, this.message = _ref.message, this.room = _ref.room;
+      if (this.typeName == null) {
+        this.typeName = "Chatmessage";
+      }
+      if (this.created == null) {
+        this.created = new Date();
+      }
+      if (this.owner == null) {
+        this.owner = "admin";
+      }
+      if (this.message == null) {
+        this.message = "dEFAULT MESSAGE";
+      }
+      if (this.room == null) {
+        this.room = "main";
       }
     }
 
-    return tester;
+    Chatmessage.prototype.clone = function() {
+      return new Chatmessage(this);
+    };
+
+    Chatmessage.prototype.getTypeName = function() {
+      return this.typeName;
+    };
+
+    Chatmessage.prototype.equals = function(other) {
+      if (other.getTypeName() !== this.typeName) {
+        return false;
+      }
+      return EJSON.stringify(this) === EJSON.stringify(other);
+    };
+
+    Chatmessage.prototype.toJSONValue = function() {
+      return {
+        _id: this._id,
+        typeName: this.typeName,
+        created: this.created,
+        owner: this.owner,
+        message: this.message
+      };
+    };
+
+    EJSON.addType("Chatmessage", function(value) {
+      console.log(value);
+      return new Chatmessage(value);
+    });
+
+    return Chatmessage;
 
   })();
 
-  if (Meteor.isClient) {
-    Meteor.subscribe('myusers');
-    this.addplayer = function() {
-      var myuser;
-      myuser = new User(auser);
-      Accounts.createUser(myuser, function(err) {
-        if (err != null) {
-          return console.log("error : " + err);
-        } else {
-          return console.log(myuser);
-        }
-      });
-      return Meteor.call("insertplayer", myuser, function(err, res) {
-        if (res != null) {
-          return console.log("result!: " + res);
-        }
-      });
-    };
-  }
-
-  this.Boards = new Meteor.Collection('boards');
-
-  this.Users = new Meteor.Collection('myusers', {
-    transform: function(doc) {
-      return new User(doc);
-    }
-  });
-
   this.Profile = (function() {
-    function Profile(params) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
-      if (params == null) {
-        params = {};
+    function Profile(_arg) {
+      var _ref;
+      _ref = _arg != null ? _arg : {}, this.name = _ref.name, this.avatar = _ref.avatar, this.totaltokens = _ref.totaltokens, this.gameslost = _ref.gameslost, this.gameswon = _ref.gameswon, this.currentroom = _ref.currentroom;
+      if (this.typeName == null) {
+        this.typeName = "Profile";
       }
-      _.extend(this, params);
-      this.typeName = "Profile";
-      console.log(params);
-      this.name = (_ref = params.name) != null ? _ref : "anon";
-      this.avatar = (_ref1 = params.avatar) != null ? _ref1 : null;
-      this.totaltokens = (_ref2 = params.totaltokens) != null ? _ref2 : 0;
-      this.gameslost = (_ref3 = params.gameslost) != null ? _ref3 : 0;
-      this.gameswon = (_ref4 = params.gameswon) != null ? _ref4 : 0;
-      this.currentroom = (_ref5 = params.currentroom) != null ? _ref5 : "main";
+      if (this.name == null) {
+        this.name = "anon";
+      }
+      this.avatar = "generic.png";
+      if (this.totaltokens == null) {
+        this.totaltokens = 0;
+      }
+      if (this.gameslost == null) {
+        this.gameslost = 0;
+      }
+      if (this.gameswon == null) {
+        this.gameswon = 0;
+      }
+      if (this.currentroom == null) {
+        this.currentroom = "main";
+      }
     }
 
     Profile.prototype.clone = function() {
@@ -133,23 +226,32 @@
       };
     };
 
+    EJSON.addType("Profile", function(value) {
+      console.log(value);
+      return new Profile(value);
+    });
+
     return Profile;
 
   })();
 
-  EJSON.addType("Profile", function(value) {
-    console.log(value);
-    return new Profile(value);
-  });
-
   this.User = (function() {
-    function User(params) {
-      var _ref, _ref1;
+    function User(_arg) {
+      var _ref;
+      _ref = _arg != null ? _arg : {}, this._id = _ref._id, this.username = _ref.username, this.password = _ref.password, this.profile = _ref.profile;
       this.typeName = "User";
-      console.log("usercon: " + params.profile);
-      this.username = (_ref = params.username) != null ? _ref : "12345";
-      this.password = (_ref1 = params.password) != null ? _ref1 : "1234";
-      this.profile = new Profile(params.profile);
+      if (this._id == null) {
+        this._id = null;
+      }
+      if (this.username == null) {
+        this.username = 1;
+      }
+      if (this.password == null) {
+        this.password = "default";
+      }
+      if (this.profile == null) {
+        this.profile = new Profile();
+      }
     }
 
     User.prototype.changeName = function(newName) {
@@ -197,48 +299,150 @@
       };
     };
 
+    EJSON.addType("User", function(value) {
+      console.log(value);
+      return new User(value);
+    });
+
     return User;
 
   })();
 
-  EJSON.addType("User", function(value) {
-    console.log(value);
-    return new User(value);
-  });
+  if (Meteor.isClient) {
+    Meteor.subscribe('chatmessages');
+    Meteor.subscribe('myusers');
+    Meteor.subscribe('myboards');
+    Meteor.subscribe('myplayers');
+    Meteor.methods({
+      insertuser: function(user) {
+        return Users.insert(user, function(err, res) {
+          if (err != null) {
+            return console.log("" + err);
+          } else {
+            console.log(res);
+            return res;
+          }
+        });
+      },
+      insertchatmessage: function(chatmessage) {
+        return Messages.insert(chatmessage, function(err, res) {
+          if (err != null) {
+            return console.log("chat insert error : " + err);
+          } else {
+            console.log("Message inserted : " + res);
+            return res;
+          }
+        });
+      },
+      insertboard: function(board) {
+        return Boards.insert(board, function(err, res) {
+          if (err != null) {
+            return console.log("insert board error: " + err);
+          } else {
+            console.log("board added " + res);
+            return res;
+          }
+        });
+      },
+      insertplayer: function(player) {
+        return Players.insert(player, function(err, res) {
+          if (err != null) {
+            return console.log("insert player error " + err);
+          } else {
+            console.log("wecome player " + res);
+            return res;
+          }
+        });
+      },
+      clear: function(dbtoclear) {
+        switch (dbtoclear) {
+          case "boards":
+            return Boards.remove({});
+          case "players":
+            return Players.remove({});
+          case "users":
+            return Users.remove({});
+          case void 0:
+        }
+      }
+    });
+  }
 
-  this.mydoc = {
-    typeName: "tester",
-    name: "test"
-  };
+  this.defaultPlayer = new Player();
 
-  this.mydoc2 = {
-    typeName: "Player",
-    name: "p1"
-  };
+  this.defaultProfile = new Profile();
 
-  this.prof = {
-    name: "bob",
-    avatar: "",
+  this.defaultUser = new User();
+
+  this.testProfile1 = new Profile({
+    _id: Meteor.uuid(),
+    name: "testProfile1",
+    avatar: "monkey.png",
     totaltokens: 3,
     gameswon: 2,
     gameslost: 1,
     currentroom: "main"
-  };
+  });
 
-  this.auser = {
-    username: "acdefgh",
+  this.testProfile2 = testProfile1.clone();
+
+  testProfile2.name = "testProfile2";
+
+  testProfile2.avatar = "tree.png";
+
+  testProfile2._id = Meteor.uuid();
+
+  console.log({
+    testProfile1: testProfile1,
+    testProfile2: testProfile2,
+    defaultProfile: defaultProfile
+  });
+
+  this.testUser1 = new User({
+    _id: Meteor.uuid(),
+    username: "testUser1",
     password: "hello",
-    profile: prof
-  };
+    profile: testProfile1
+  });
 
-  prof1 = new Profile(prof);
+  this.testUser2 = testUser1.clone();
 
-  this.user1 = new User(auser);
+  testUser2.username = "testUser2";
 
-  this.test1 = new tester();
+  testUser2._id = Meteor.uuid();
 
-  this.test2 = new tester(mydoc);
+  console.log({
+    testUser1: testUser1,
+    testUser2: testUser2,
+    defaultUser: defaultUser
+  });
 
-  this.player1 = new Player(mydoc2);
+  this.defaultMessage = new Chatmessage();
+
+  this.Message1 = new Chatmessage({
+    owner: testUser1._id,
+    message: "this test worked"
+  });
+
+  this.Message2 = new Chatmessage({
+    owner: testUser2._id,
+    message: "this test worked too"
+  });
+
+  console.log({
+    Message1: Message1,
+    Message2: Message2,
+    defaultMessage: defaultMessage
+  });
+
+  Meteor.call("insertchatmessage", Message1, function(err, res) {
+    var x;
+    if (err != null) {
+      return console.log("insert failed :" + err);
+    } else {
+      console.log(res);
+      return x = res;
+    }
+  });
 
 }).call(this);

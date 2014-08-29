@@ -6,9 +6,9 @@ class @Space
             @isStart = true
         @tokens = 0
         @players = []
-        @onEntry = (player)->
+        @onEntry = ()->
             return
-        @onexit = (player) ->
+        @onexit = () ->
             return
             
 class @Board
