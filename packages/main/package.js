@@ -23,12 +23,12 @@ Package.on_use(function (api, where) {
 	api.add_files('public/img/bunny.png', 'client');
 	
 
-	api.add_files('public/Templates/main.html', 'client');
-	api.add_files('public/Stylesheets/main.less', 'client');
+	api.add_files('public/Templates/main.html', ['client']);
+	api.add_files('public/Stylesheets/main.less', ['client']);
 	api.add_files('public/collections.coffee', ['client','server']);
-	api.add_files('server/mainServer.coffee', 'server');
-	
-	api.add_files('client/Board.coffee', 'client');
+	api.add_files('server/mainServer.coffee', ['server']);
+	api.add_files('client/mainClient.coffee',['client'])
+	api.add_files('client/Board.coffee', ['client']);
 	
 	
 });
