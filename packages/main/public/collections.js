@@ -308,4 +308,118 @@
 
   })();
 
+  this.Space = (function() {
+    function Space(_arg) {
+      var _ref;
+      _ref = _arg != null ? _arg : {}, this.number = _ref.number, this.spacePos = _ref.spacePos;
+      if (this.typeName == null) {
+        this.typeName = "Space";
+      }
+      if (this.number === 1) {
+        this.isStart = true;
+      }
+      this.tokens = 0;
+      this.players = [];
+    }
+
+    Space.onEntry = function() {};
+
+    Space.onexit = function() {};
+
+    Space.prototype.clone = function() {
+      return new Space(this);
+    };
+
+    Space.prototype.getTypeName = function() {
+      return this.typeName;
+    };
+
+    Space.prototype.equals = function(other) {
+      if (other.getTypeName() !== this.typeName) {
+        return false;
+      }
+      return EJSON.stringify(this) === EJSON.stringify(other);
+    };
+
+    Space.prototype.toJSONValue = function() {
+      return {
+        typeName: this.typeName,
+        number: this.number,
+        players: this.players,
+        profile: this.profile
+      };
+    };
+
+    EJSON.addType("Space", function(value) {
+      console.log(value);
+      return new Space(value);
+    });
+
+    return Space;
+
+  })();
+
+  this.Board = (function() {
+    function Board(_arg) {
+      var i, numOfSpaces, _i, _ref;
+      _ref = _arg != null ? _arg : {}, this._id = _ref._id, this.Spaces = _ref.Spaces, this.ownerId = _ref.ownerId, this.firstcorner = _ref.firstcorner;
+      if (this._id == null) {
+        this._id = Meteor.uuid();
+      }
+      this.typeName = "Board";
+      if (this.firstcorner == null) {
+        this.firstcorner = [0, 0];
+      }
+      if (this.ownerId == null) {
+        this.ownerId = Meteor.uuid();
+      }
+      if (this.Spaces == null) {
+        this.Spaces = [];
+      }
+      numOfSpaces = 20;
+      for (i = _i = 0; 0 <= numOfSpaces ? _i <= numOfSpaces : _i >= numOfSpaces; i = 0 <= numOfSpaces ? ++_i : --_i) {
+        this.Spaces[i] = new Space();
+      }
+    }
+
+    Board._board = new Board();
+
+    console.log(Board._board);
+
+    Board.prototype.clone = function() {
+      return new Board(this);
+    };
+
+    Board.prototype.getTypeName = function() {
+      return this.typeName;
+    };
+
+    Board.prototype.equals = function(other) {
+      if (other.getTypeName() !== this.typeName) {
+        return false;
+      }
+      return EJSON.stringify(this) === EJSON.stringify(other);
+    };
+
+    Board.prototype.toJSONValue = function() {
+      return {
+        _id: this._id,
+        typeName: this.typeName,
+        Spaces: this.Spaces,
+        firstcorner: this.firstcorner,
+        profile: this.profile
+      };
+    };
+
+    EJSON.addType("Board", function(value) {
+      console.log(value);
+      return new Board(value);
+    });
+
+    return Board;
+
+  })();
+
 }).call(this);
+
+//# sourceMappingURL=collections.js.map

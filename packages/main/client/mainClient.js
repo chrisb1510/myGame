@@ -4,15 +4,34 @@
     Meteor.subscribe('myusers');
     Meteor.subscribe('myboards');
     Meteor.subscribe('myplayers');
-    Template.hello({
+    Template.hello.helpers({
       greeting: function() {
         return "Welcome to My Game.";
       }
-    }, events({
-      "click input": function() {
-        return window.alert("You pressed the button");
+    });
+    Template.hello.events = {
+      "click input#tester": function() {
+        return console.log("You pressed the cheese");
       }
-    }));
+    };
+    Template.Userlist.helpers({
+      defaultuser: function() {
+        var user;
+        return user = new User().toJSONValue();
+      }
+    });
+    Template.Chatmessagelist.helpers({
+      defaultmessage: function() {
+        var message;
+        return message = new Chatmessage().toJSONValue();
+      }
+    });
+    Template.GameBoard.helpers({
+      defaultboard: function() {
+        var board;
+        return board = new Board().toJSONValue();
+      }
+    });
     Meteor.methods({
       insertuser: function(user) {
         return Users.insert(user, function(err, res) {
@@ -62,19 +81,12 @@
             return Players.remove({});
           case "users":
             return Users.remove({});
+          case "chatmessages":
+            return Message.remove({});
           case void 0:
         }
       }
     });
-    Template.hello({
-      greeting: function() {
-        return "Welcome to My Game.";
-      }
-    }, events({
-      "click input": function() {
-        return window.alert("You pressed the button");
-      }
-    }));
   }
 
   this.defaultPlayer = new Player();
@@ -144,14 +156,18 @@
     defaultMessage: defaultMessage
   });
 
-  Meteor.call("insertchatmessage", Message1, function(err, res) {
-    var x;
-    if (err != null) {
-      return console.log("insert failed :" + err);
-    } else {
-      console.log(res);
-      return x = res;
-    }
-  });
+  this.test = function() {
+    return Meteor.call("insertchatmessage", Message1, function(err, res) {
+      if (err != null) {
+        console.log("insert failed :" + err);
+        return false;
+      } else {
+        console.log(res);
+        return true;
+      }
+    });
+  };
 
 }).call(this);
+
+//# sourceMappingURL=mainClient.js.map

@@ -9,11 +9,14 @@
 </head>
 
 <body>
-    {{> gyro}}
-    <!--{{> loginButtons}}
-    {{> hello}}
-    {{> pixi}}
-    {{> Mainchatroom}}-->
+    <!--{{> gyro}}-->
+    {{> loginButtons }}
+    {{> hello }}
+    {{> Userlist }}
+    {{> GameBoard }}
+    {{> Chatmessagelist }}
+    <!-- {{> pixi}}-->
+    <!-- {{> Mainchatroom}}-->
 </body>
 
 <template name="hello">
@@ -28,9 +31,17 @@
     </div>
 
 </template>
-<template name="board">
-        
+<template name="Userlist">
+    <p>{{defaultuser}}</p>
 </template>
+<template name="GameBoard">
+    <p>{{defaultboard}}</p>     
+</template>
+<template name="Chatmessagelist">
+    <p>{{defaultmessage}}</p>
+</template>
+
+
 <template name="tapper">
 
 </template>

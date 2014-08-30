@@ -9,15 +9,26 @@ if Meteor.isClient
 #HELPERS*******************************************************************
 #**************************************************************************
 
-    Template.hello
-	    greeting: () ->
+    Template.hello.helpers
+        greeting: () ->
     	    "Welcome to My Game."
-        events
-         "click input": ->
-    	        window.alert "You pressed the button"
-    	    
-    	
-
+    
+    Template.hello.events = { 
+        "click input#tester":() ->
+                console.log "You pressed the cheese"}	    
+    Template.Userlist.helpers
+        defaultuser:()->
+            user =  new User().toJSONValue()
+            	
+    
+    Template.Chatmessagelist.helpers
+        defaultmessage:()->
+            message = new Chatmessage().toJSONValue()
+    
+    Template.GameBoard.helpers
+        defaultboard:()->
+            board =  new Board().toJSONValue() 
+                   
 #METHODS*******************************************************************
 #**************************************************************************
 
@@ -57,17 +68,12 @@ if Meteor.isClient
         #-------------------------------------------------------
         clear:(dbtoclear)->
             switch dbtoclear
-                when "boards" then Boards.remove({})
-                when "players" then Players.remove({})
-                when "users" then Users.remove({})
+                when "boards"       then Boards.remove({})
+                when "players"      then Players.remove({})
+                when "users"        then Users.remove({})
+                when "chatmessages" then Message.remove({})
                 when undefined then return    
 
-    Template.hello
-	    greeting: () ->
-    	    "Welcome to My Game."
-        events
-         "click input": ->
-    	        window.alert "You pressed the button"
     	    
     	
 
@@ -116,11 +122,12 @@ console.log {testUser1,testUser2,defaultUser}
 @Message1 = new Chatmessage({owner:testUser1._id,message:"this test worked"})
 @Message2 = new Chatmessage({owner:testUser2._id,message:"this test worked too"})
 console.log {Message1,Message2,defaultMessage}
-        
-Meteor.call "insertchatmessage", Message1, (err,res) ->
+@test = ()->        
+    Meteor.call "insertchatmessage", Message1, (err,res) ->
         if err?
             console.log "insert failed :#{err}"
+            false
         else
             console.log res
-            return x =res  
+            true  
     

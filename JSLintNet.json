@@ -1,5 +1,7 @@
 ﻿{
   "ignore": [
-    "\\myGame\\js\\"
+    "\\myGame\\js\\",
+    "\\myGame\\packages\\main\\client\\mainClient.js",
+    "\\myGame\\packages\\main\\client\\CoffeeScript.js"
   ]
 }

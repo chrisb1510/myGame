@@ -206,11 +206,90 @@ class @User
     EJSON.addType "User",(value) ->
         console.log value
         new User(value)
-#**************************************************************************
-#Client - to move soon
 
 #**************************************************************************
+#SPACE*********************************************************************
+#**************************************************************************
+class @Space
+    constructor:({@number,@spacePos}={})->
+        @typeName ?= "Space"
+        #sets the space number
+        if @number is 1
+            @isStart = true
+        @tokens = 0
+        @players = []
+    
+    #METHODS-----------------------------------------------------
+    
+    @onEntry = ()->
+        return
+    @onexit = () ->
+        return
+    
+    #**************************************************************************
+    #EJSON definitions
+    #**************************************************************************
+    clone:()->
+         new Space(@) 
+    getTypeName:()-> return @typeName
+    equals:(other)->
+         if other.getTypeName() isnt @typeName 
+             return false
+         EJSON.stringify( @ ) == EJSON.stringify(other)
+    toJSONValue:()->
+         return {
+            typeName :@typeName
+            number:@number
+            players:@players
+            profile:@profile}
 
+    EJSON.addType "Space",(value) ->
+        console.log value
+        new Space(value)            
+
+#**************************************************************************
+#SPACE*********************************************************************
+#**************************************************************************
+class @Board
+    constructor:( {@_id,@Spaces,@ownerId,@firstcorner} ={} )->
+        @_id ?= Meteor.uuid()
+        @typeName = "Board"
         
-#@y = Messages.findOne(x)
-#console.log {y}                
+        @firstcorner ?= [   0,   0]
+        @ownerId ?= Meteor.uuid()
+        @Spaces ?= []
+        numOfSpaces = 20
+        for i in [0..numOfSpaces] 
+            @Spaces[i] = new Space()
+        
+    @_board = new Board()
+    console.log @_board
+            
+        #make spaces from class and allocate x,y of each
+    
+            
+        
+#**************************************************************************
+#EJSON definitions
+#**************************************************************************
+    clone:()->new Board(@) 
+    
+    getTypeName:()-> return @typeName
+    
+    equals:(other)->
+         if other.getTypeName() isnt @typeName 
+             return false
+         EJSON.stringify( @ ) == EJSON.stringify(other)
+    
+    toJSONValue:()->
+         return {
+            _id:@_id
+            typeName :@typeName
+            Spaces:@Spaces
+            firstcorner:@firstcorner
+            profile:@profile}
+
+    EJSON.addType "Board",(value) ->
+        console.log value
+        new Board(value)        
+             
