@@ -119,6 +119,54 @@
 
   })();
 
+  this.Room = (function() {
+    function Room(_arg) {
+      var _ref;
+      _ref = _arg != null ? _arg : {}, this.name = _ref.name, this.ownerid = _ref.ownerid;
+      if (this.typeName == null) {
+        this.typeName = "Room";
+      }
+      if (this.roomid == null) {
+        this.roomid = Meteor.uuid();
+      }
+      if (this.ownerid == null) {
+        this.ownerid = "";
+      }
+      this.messages = "";
+    }
+
+    Room.prototype.clone = function() {
+      return new Room(this);
+    };
+
+    Room.prototype.getTypeName = function() {
+      return this.typeName;
+    };
+
+    Room.prototype.equals = function(other) {
+      if (other.getTypeName() !== this.typeName) {
+        return false;
+      }
+      return EJSON.stringify(this) === EJSON.stringify(other);
+    };
+
+    Room.prototype.toJSONValue = function() {
+      return {
+        _id: this._id,
+        typeName: this.typeName,
+        ownerid: this.ownerid
+      };
+    };
+
+    EJSON.addType("Player", function(value) {
+      console.log(value);
+      return new Player(value);
+    });
+
+    return Room;
+
+  })();
+
   this.Chatmessage = (function() {
     function Chatmessage(_arg) {
       var _ref;

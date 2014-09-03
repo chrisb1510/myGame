@@ -90,6 +90,34 @@ class @Player
         console.log value
         new Player(value)          
 #*******************************************************************************
+#*******************************************************************************
+class @Room 
+    constructor:({@name,@ownerid}={})->
+        @typeName ?="Room"
+        @roomid ?= Meteor.uuid()    
+        @ownerid ?= ""
+        @messages = ""#Messages.find roomid:'roomid'
+    clone:()-> new Room(@)
+    #------------------------------------------------------- 
+    getTypeName:()-> return @typeName
+    
+    #-------------------------------------------------------
+    equals:(other)->
+         if other.getTypeName() isnt @typeName 
+             return false
+         EJSON.stringify( @ ) == EJSON.stringify(other)
+    #-------------------------------------------------------
+    toJSONValue:()->
+         return {
+         _id:@_id
+         typeName:@typeName
+         ownerid:@ownerid
+         }        
+    #-------------------------------------------------------        
+    EJSON.addType "Player",(value) ->
+        console.log value
+        new Player(value)          
+#*******************************************************************************
 #*******************************************************************************        
 class @Chatmessage 
     constructor:({@created,@owner,@message,@room}= {})->

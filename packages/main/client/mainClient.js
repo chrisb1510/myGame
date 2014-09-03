@@ -17,14 +17,16 @@
     Template.Userlist.helpers({
       defaultuser: function() {
         var user;
-        return user = new User().toJSONValue();
-      }
+        return user = new User();
+      },
+      Usersinsameroom: function() {}
     });
     Template.Chatmessagelist.helpers({
       defaultmessage: function() {
         var message;
         return message = new Chatmessage().toJSONValue();
-      }
+      },
+      messageslistbyroom: function() {}
     });
     Template.GameBoard.helpers({
       defaultboard: function() {

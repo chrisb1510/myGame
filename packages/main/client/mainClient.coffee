@@ -12,19 +12,25 @@ if Meteor.isClient
     Template.hello.helpers
         greeting: () ->
     	    "Welcome to My Game."
-    
+        
     Template.hello.events = { 
         "click input#tester":() ->
-                console.log "You pressed the cheese"}	    
+                console.log "You pressed the cheese"
+                }	    
+    
     Template.Userlist.helpers
         defaultuser:()->
-            user =  new User().toJSONValue()
-            	
-    
+            user =  new User()
+        Usersinsameroom:()->
+            #Users.find Session.get('roomid')? or "main"   	
+            
     Template.Chatmessagelist.helpers
         defaultmessage:()->
             message = new Chatmessage().toJSONValue()
-    
+       
+        messageslistbyroom:()->
+           # Messages.find Session.get('roomid')? or "main"
+            
     Template.GameBoard.helpers
         defaultboard:()->
             board =  new Board().toJSONValue() 
