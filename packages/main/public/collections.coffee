@@ -63,6 +63,7 @@ Players.allow
 #CLASS DEFINITIONS**************************************************************
 #*******************************************************************************
 
+
 class @Player 
     constructor:({@number,@name}={})->
         @typeName ?="Player"
@@ -114,7 +115,7 @@ class @Room
          ownerid:@ownerid
          }        
     #-------------------------------------------------------        
-    EJSON.addType "Player",(value) ->
+    EJSON.addType "Room",(value) ->
         console.log value
         new Player(value)          
 #*******************************************************************************

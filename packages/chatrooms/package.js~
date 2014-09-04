@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "blah blah",
+  summary: "blah blah"
   version:"0.1.0"
 });
 

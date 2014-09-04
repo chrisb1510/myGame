@@ -7,7 +7,7 @@
 
     "test": "tests",
     "main": "packages/main",
-    "myUsers": "packages/myUsers"
+    "myusers": "packages/myusers"
   },
   "Dependencies":{
     "coffee-script":"latest"

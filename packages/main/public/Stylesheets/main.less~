@@ -1,7 +1,7 @@
 // style.less file
 
 
-@import "../../../less-bootstrap-3/lib/less/bootstrap.import.less";
+@import "../../../less-bootstrap-3/bootstrap.import.less";
 @import "../../../less-fontawesome-4/lib/less/font-awesome.import.less";
 
 body{

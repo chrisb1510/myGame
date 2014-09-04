@@ -6,8 +6,6 @@
   "version": "0.0.1",
   "git": "",
   "packages": {
-    "munit":{},
-    "chai":{},
-    "sinon":{}
+    
   }
 }

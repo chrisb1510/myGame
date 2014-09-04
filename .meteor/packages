@@ -11,12 +11,12 @@ less
 less-fontawesome-4
 less-bootstrap-3
 
-munit
 
 accounts-ui
 accounts-password
 
 main
-myUsers
 ejson
 underscore
+pixijs
+myusers

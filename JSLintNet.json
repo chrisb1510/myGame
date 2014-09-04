@@ -1,7 +1,0 @@
-﻿{
-  "ignore": [
-    "\\myGame\\js\\",
-    "\\myGame\\packages\\main\\client\\mainClient.js",
-    "\\myGame\\packages\\main\\client\\CoffeeScript.js"
-  ]
-}

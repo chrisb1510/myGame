@@ -1,6 +1,7 @@
 if Meteor.isClient
 #**************************************************************************
 #subscriptions
+
     Meteor.subscribe 'chatmessages'
     Meteor.subscribe 'myusers'
     Meteor.subscribe 'myboards'

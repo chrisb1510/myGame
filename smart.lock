@@ -3,8 +3,7 @@
   "dependencies": {
     "basePackages": {
       "less-bootstrap-3": {},
-      "less-fontawesome-4": {},
-      "phaserio": {}
+      "less-fontawesome-4": {}
     },
     "packages": {
       "less-bootstrap-3": {
@@ -16,11 +15,6 @@
         "git": "https://github.com/DerMambo/less-fontawesome-4.git",
         "tag": "v0.0.4",
         "commit": "79fdf3d3e90fdb4635878b34f545965014cd4ea8"
-      },
-      "phaserio": {
-        "git": "https://github.com/thinkong/meteor-phaser.git",
-        "tag": "v0.0.1",
-        "commit": "e32052e04e1c23c6cef80bd0e7a52511ec95b8a6"
       }
     }
   }

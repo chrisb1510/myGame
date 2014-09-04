@@ -1,7 +1,8 @@
 
 
 Package.describe({
-  summary: "my project trying to get testing and metoer working - noob"
+  summary: "my project trying to get testing and metoer working - noob",
+  version:"0.1.0"
   
 });
 
@@ -20,8 +21,8 @@ Package.on_use(function (api, where) {
 
 Package.on_test(function (api) {
 	var both = ['client','server']
-	api.use(['coffeescript','munit','chai']);
-  api.use('myUsers');
+	api.use(['coffeescript']);
+  api.use('myusers');
 
   api.add_files('client/User.coffee','server')
   api.add_files('lib/myUser_tests.coffee', 'server');
