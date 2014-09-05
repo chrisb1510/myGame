@@ -1,0 +1,11 @@
+{
+  "name": "mypackage",
+  "description": "Segment 1 - testing with munit coffeescript",
+  "homepage": "",
+  "author": "chris bailey chrisbailey1510@gmail.com",
+  "version": "0.0.1",
+  "git": "",
+  "packages": {
+    
+  }
+}

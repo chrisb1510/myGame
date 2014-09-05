@@ -2,20 +2,20 @@
   "name": "myGame",
   "version": "0.3.0",
   "description": "My uni hnd project. Meteor with local packages and testing.",
-  "main": "main.html",
+  "main": "",
   "directories": {
-    
-    "main": "main",
-    "myUsers": "myUsers"
+
+    "test": "tests",
+    "main": "packages/main",
+    "myusers": "packages/myusers"
   },
   "Dependencies":{
     "coffee-script":"latest"
+
   },
   "scripts": {
     "install":"mrt install ",
-    "run": "meteor",
-    "test": "meteor test-packages packages/main packages/myUsers"
-  },
+    "run": "meteor"  },
   "repository": {
     "type": "git",
     "url": "https://github.com/chrisb1510/myGame.git"

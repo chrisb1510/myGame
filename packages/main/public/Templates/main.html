@@ -1,0 +1,64 @@
+<head>
+    <title>myGame</title>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!--{{> gyro}}-->
+    {{> loginButtons }}
+    {{> hello }}
+    {{> Userlist }}
+    {{> GameBoard }}
+    {{> Chatmessagelist }}
+    <!-- {{> pixi}}-->
+    <!-- {{> Mainchatroom}}-->
+</body>
+
+<template name="hello">
+
+    <h1>Hello World!</h1>
+    {{greeting}}
+    <input id="tester" type="button" value="Click" />
+</template>
+<template name="pixi">
+    <div id="pixistage">
+        {{game}}
+    </div>
+
+</template>
+<template name="Userlist">
+    <p>{{ defaultuser}}</p>
+</template>
+<template name="GameBoard">
+    <p>{{defaultboard}}</p>
+</template>
+
+<template name="Chatmessagelist">
+    
+    <section id="chatmessagebox">
+        
+    
+    </section> 
+</template>
+<template name="message">
+    
+</template>
+
+<template name="tapper">
+
+</template>
+<template name="controller">
+
+</template>
+<template name="gyro">
+    <div id="gyrocontainer">
+        <div id="output"></div>
+        <div id="tiltdisplay"></div>
+    </div>
+</template>
+
+<!---->

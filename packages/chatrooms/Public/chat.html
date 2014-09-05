@@ -1,0 +1,48 @@
+<template name="Mainchatroom">
+<h2>Have a Chat!</h2>
+{{> chatmessages}}	
+<h3>Enter Your Message Here</h3>
+{{> entry}}
+<h3>Users Connected</h3>
+{{> playerouter}}
+</template>
+
+<template name="chatmessages">
+<div id="msglist">
+	{{#each chatmessages}}
+		{{> chatPost}}
+	{{/each}}
+	</div>
+</template>
+
+<template name="entry">
+
+<div>
+		<input id="name" type="txtbox" placeholder="Your name"/>
+		<input type="txtbox" id="chatText" placeholder="Enter Your Message" /> 
+		<input id="chatSubmit" type="button" value="Post" />
+		<input id="clearchatbox" type="button" value="Clear Chat" />
+		<input id="testing123" type="button" value="New room" />
+</div>
+  
+
+</template>
+
+
+<template name="playerouter">
+	<ul id="playerbox">
+	{{#each players}}
+		{{> player}}
+	{{/each}}
+	</ul>
+</template>
+<template name="player">
+	<li>
+		{{userId}}<strong>{{_id}}</strong>, {{name}}
+	</li>
+</template>
+<template name="chatPost">
+<strong>{{name}}:</strong>{{chatPosted}}<br>
+</template>
+
+<template name="Gamechatroom"></template>
