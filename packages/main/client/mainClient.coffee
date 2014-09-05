@@ -23,14 +23,19 @@ if Meteor.isClient
         defaultuser:()->
             user =  new User()
         Usersinsameroom:()->
-            #Users.find Session.get('roomid')? or "main"   	
+            return Users.find({'profile.roomid':Session.get ('roomid') or "main"})
+            
+                
+
+            
+               	
             
     Template.Chatmessagelist.helpers
         defaultmessage:()->
             message = new Chatmessage().toJSONValue()
        
         messageslistbyroom:()->
-           # Messages.find Session.get('roomid')? or "main"
+           return Messages.find({'roomid':Session.get ('roomid') or "main"})
             
     Template.GameBoard.helpers
         defaultboard:()->
@@ -113,7 +118,6 @@ console.log {testProfile1, testProfile2,defaultProfile}
         
         
 @testUser1= new User
-    _id:Meteor.uuid()
     username:"testUser1"
     password:"hello"
     profile: testProfile1
@@ -129,12 +133,57 @@ console.log {testUser1,testUser2,defaultUser}
 @Message1 = new Chatmessage({owner:testUser1._id,message:"this test worked"})
 @Message2 = new Chatmessage({owner:testUser2._id,message:"this test worked too"})
 console.log {Message1,Message2,defaultMessage}
-@test = ()->        
+
+
+@defaultboard = new Board()
+console.log @board
+
+@inserttest = ()->
+    #test inserts        
     Meteor.call "insertchatmessage", Message1, (err,res) ->
         if err?
-            console.log "insert failed :#{err}"
+            console.log "insert message failed :#{err}"
             false
         else
-            console.log res
+            console.log "#{res} : Inserted to Messages"
             true  
+    Meteor.call "insertchatmessage", Message2, (err,res) ->
+        if err?
+            console.log "insert message failed :#{err}"
+            false
+        else
+            console.log "#{res} : Inserted to Messages"
+            true  
+    Meteor.call "insertchatmessage", defaultMessage, (err,res) ->
+        if err?
+            console.log "insert message failed :#{err}"
+            false
+        else
+            console.log "#{res} : Inserted to Messages"
+            true
     
+    #Test User inserts
+    Meteor.call "insertuser", testUser1, (err,res) ->
+        if err?
+            console.log "insert user failed :#{err}"
+            false
+        else
+            console.log "#{res} : Inserted to Users"
+            true 
+    Meteor.call "insertuser", testUser2, (err,res) ->
+        if err?
+            console.log "insert user failed :#{err}"
+            false
+        else
+            console.log "#{res} : Inserted to Users"
+            true
+    Meteor.call "insertuser", defaultUser, (err,res) ->
+        if err?
+            console.log "insert user failed :#{err}"
+            false
+        else
+            console.log "#{res} : Inserted to Users"
+            true
+    console.log "users inserted: "+Users.find().fetch()
+    console.log "Messages inserted"+Messages.find().fetch()
+inserttest()

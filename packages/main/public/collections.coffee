@@ -3,18 +3,20 @@
 #****************************************************************************
 
 #BOARDS**********************************************************************
-@Boards = new Meteor.Collection 'myboards',   
-    transform:(doc)->
-        new Board(doc)
-
-#PERMISSIONS-----------------------------
+@Boards = new Meteor.Collection 'myboards'
+#PERMISSIONS-----------------------------        
 Boards.allow
-    insert:(doc)->
+    insert: (_id, doc) ->
         return true
-    update:(doc)->
+    update: (_id, doc, fields, modifier) ->
         return true
-    remove:(doc)->
+    remove: (_id, doc) ->
         return true
+    transform: (_id,doc) ->
+        new Board(doc)
+    
+
+
 
 #USERS************************************************************************
 @Users = new Meteor.Collection 'myusers',
@@ -63,12 +65,20 @@ Players.allow
 #CLASS DEFINITIONS**************************************************************
 #*******************************************************************************
 
+#PLAYERS*******************************************************************************
+
 
 class @Player 
-    constructor:({@number,@name}={})->
+    constructor:({@_id,@number,@name}={})->
+        @_id ?= Meteor.uuid()
         @typeName ?="Player"
         @number ?= "n/a"    
         @name ?= "anon"
+
+#**************************************************************************
+#EJSON definitions
+#**************************************************************************
+
     
     clone:()-> new Player(@)
     #------------------------------------------------------- 
@@ -82,10 +92,11 @@ class @Player
     #-------------------------------------------------------
     toJSONValue:()->
          return {
-         _id:@_id
-         typeName:@typeName
-         name:@name
-         number:@number}        
+         _id        :@_id
+         typeName   :@typeName
+         name       :@name
+         number     :@number
+         }        
     #-------------------------------------------------------        
     EJSON.addType "Player",(value) ->
         console.log value
@@ -93,11 +104,18 @@ class @Player
 #*******************************************************************************
 #*******************************************************************************
 class @Room 
-    constructor:({@name,@ownerid}={})->
-        @typeName ?="Room"
-        @roomid ?= Meteor.uuid()    
-        @ownerid ?= ""
-        @messages = ""#Messages.find roomid:'roomid'
+    constructor:({@_id,@name,@ownerid}={})->
+        @_id        ?= Meteor.uuid()
+        @typeName   ?= "Room"
+        @ownerid    ?= ""
+        @messages    = {}
+
+#**************************************************************************
+#EJSON definitions
+#**************************************************************************
+    
+
+
     clone:()-> new Room(@)
     #------------------------------------------------------- 
     getTypeName:()-> return @typeName
@@ -110,23 +128,28 @@ class @Room
     #-------------------------------------------------------
     toJSONValue:()->
          return {
-         _id:@_id
-         typeName:@typeName
-         ownerid:@ownerid
+         _id      :@_id
+         typeName :@typeName
+         ownerid  :@ownerid
          }        
     #-------------------------------------------------------        
     EJSON.addType "Room",(value) ->
         console.log value
         new Player(value)          
+
+
 #*******************************************************************************
+#CHATMESSAGE--------------------------------------------------------------------
+#CHATMESSAGE--------------------------------------------------------------------
 #*******************************************************************************        
 class @Chatmessage 
-    constructor:({@created,@owner,@message,@room}= {})->
+    constructor:({@_id,@created,@owner,@message,@roomid}= {})->
+        @_id      ?= Meteor.uuid()
         @typeName ?= "Chatmessage"
-        @created ?= new Date()   
-        @owner ?= "admin"
-        @message ?= "dEFAULT MESSAGE"
-        @room ?= "main"
+        @created  ?= new Date()   
+        @owner    ?= "admin"
+        @message  ?= "dEFAULT MESSAGE"
+        @roomid   ?= "main"
 
 
 #**************************************************************************
@@ -140,16 +163,18 @@ class @Chatmessage
     #-------------------------------------------------------
     equals:(other)->
          if other.getTypeName() isnt @typeName 
-             return false
+            return false
          EJSON.stringify( @ ) == EJSON.stringify(other)
     #-------------------------------------------------------
     toJSONValue:()->
         return {
-            _id:@_id
-            typeName:@typeName
-            created:@created,
-            owner:@owner,
-            message:@message}        
+            _id      :@_id
+            typeName :@typeName
+            created  :@created,
+            owner    :@owner,
+            message  :@message,
+            roomid   :@roomid
+            }        
     #-------------------------------------------------------        
     EJSON.addType "Chatmessage",(value) ->
         console.log value
@@ -157,15 +182,16 @@ class @Chatmessage
 #*******************************************************************************
 #*******************************************************************************           
 class @Profile
-    constructor:({@name,@avatar,@totaltokens,
-    @gameslost,@gameswon,@currentroom}={})->
-        @typeName ?= "Profile"
-        @name ?=  "anon"
-        @avatar = "generic.png"
+    constructor:({@_id,@name,@avatar,@totaltokens,
+    @gameslost,@gameswon,@roomid}={})->
+        @_id         ?= Meteor.uuid()
+        @typeName    ?= "Profile"
+        @name        ?=  "anon"
+        @avatar      ?= "generic.png"
         @totaltokens ?= 0
-        @gameslost ?= 0
-        @gameswon ?= 0
-        @currentroom ?= "main"
+        @gameslost   ?= 0
+        @gameswon    ?= 0
+        @roomid      ?= "main"
 #**************************************************************************
 #EJSON definitions
 #**************************************************************************
@@ -182,13 +208,15 @@ class @Profile
     #-------------------------------------------------------
     toJSONValue:()->
          return { 
-            typeName:@typeName
-            name:@name
-            avatar:@avatar
-            totaltokens:@totaltokens
-            gameslost:@gameslost
-            gameswon:@gameswon
-            currentroom:@currentroom}
+            _id         :@_id
+            typeName    :@typeName
+            name        :@name
+            avatar      :@avatar
+            totaltokens :@totaltokens
+            gameslost   :@gameslost
+            gameswon    :@gameswon
+            roomid      :@roomid
+        }
     #-------------------------------------------------------
     EJSON.addType "Profile",(value) ->
         console.log value
@@ -197,12 +225,11 @@ class @Profile
 #*******************************************************************************     
 class @User 
     constructor:({@_id,@username,@password,@profile}={})->
-        @typeName = "User"
-        @_id ?= null
-        
+        @typeName  = "User"
+        @_id      ?= Meteor.uuid()
         @username ?= 1
         @password ?= "default"
-        @profile ?=  new Profile()  
+        @profile  ?=  new Profile()  
         
     changeName: (newName) ->
         @profile.name = newName
@@ -227,10 +254,12 @@ class @User
          EJSON.stringify( @ ) == EJSON.stringify(other)
     toJSONValue:()->
          return {
+            _id      :@_id
             typeName :@typeName
-            username:@username
-            password:@password
-            profile:@profile}
+            username :@username
+            password :@password
+            profile  :@profile
+        }
 
     EJSON.addType "User",(value) ->
         console.log value
@@ -240,13 +269,14 @@ class @User
 #SPACE*********************************************************************
 #**************************************************************************
 class @Space
-    constructor:({@number,@spacePos}={})->
+    constructor:({@_id,@number,@tokens,@players}={})->
+        @_id ?= Meteor.uuid()
         @typeName ?= "Space"
         #sets the space number
         if @number is 1
             @isStart = true
-        @tokens = 0
-        @players = []
+        @tokens ?= 0
+        @players ?= []
     
     #METHODS-----------------------------------------------------
     
@@ -267,10 +297,12 @@ class @Space
          EJSON.stringify( @ ) == EJSON.stringify(other)
     toJSONValue:()->
          return {
-            typeName :@typeName
-            number:@number
-            players:@players
-            profile:@profile}
+            _id :       @_id
+            typeName :  @typeName
+            number:     @number
+            players:    @players
+            tokens:     @tokens
+        }
 
     EJSON.addType "Space",(value) ->
         console.log value
@@ -289,10 +321,9 @@ class @Board
         @Spaces ?= []
         numOfSpaces = 20
         for i in [0..numOfSpaces] 
-            @Spaces[i] = new Space()
+            @Spaces[i]= new Space()
         
-    @_board = new Board()
-    console.log @_board
+    
             
         #make spaces from class and allocate x,y of each
     
@@ -312,11 +343,13 @@ class @Board
     
     toJSONValue:()->
          return {
-            _id:@_id
-            typeName :@typeName
-            Spaces:@Spaces
-            firstcorner:@firstcorner
-            profile:@profile}
+            _id         :@_id
+            typeName    :@typeName
+            Spaces      :@Spaces
+            numOfSpaces :@numOfSpaces
+            firstcorner :@firstcorner
+            profile     :@profile
+        }
 
     EJSON.addType "Board",(value) ->
         console.log value
