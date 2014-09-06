@@ -1,0 +1,26 @@
+<head>
+  <title>mycamera</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> hello}}
+  {{> camera}}
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="camera">
+	<div id="cameraContainer">
+		<video autoplay></video>
+		<img src/>
+	
+		<canvas></canvas>	
+	
+	<input id="snapshot" type="button" value="snapshot" />
+	</div>
+</template>

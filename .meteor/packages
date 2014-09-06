@@ -16,7 +16,13 @@ accounts-ui
 accounts-password
 
 main
+<<<<<<< HEAD
 ejson
 underscore
 pixijs
 myusers
+=======
+myUsers
+modernizr-meteor
+pixijs
+>>>>>>> 3512af2acfd9ae292a98adc57a0f6736973e49eb
