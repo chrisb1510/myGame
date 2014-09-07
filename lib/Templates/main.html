@@ -8,15 +8,15 @@
 </head>
 
 <body>
-    <!--{{> gyro}}-->
+    {{> gyro}}
     {{> loginButtons }}
-    {{> camera}}
+    {{> camera }}          
     {{> hello }}
-    {{> Userlist }}
-    {{> GameBoard }}
-    {{> Chatmessagelist }}
-    <!-- {{> pixi}}-->
-    <!-- {{> Mainchatroom}}-->
+    <!--    {{> pixicontainer}}    -->
+    <!--    {{> GameBoard }}       -->
+    <!--    {{> Chatmessagelist }} -->
+    <!--    {{> Userlist }}        -->
+    <!--    {{> Mainchatroom }}    -->
 </body>
 
 <template name="hello">
@@ -36,9 +36,9 @@
     </div>
 </template>
 
-<template name="pixi">
+<template name="pixicontainer">
     <div id="pixistage">
-        {{game}}
+        {{pixicanvas}}
     </div>
 </template>
 

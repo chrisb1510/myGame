@@ -1,21 +1,4 @@
 ﻿# CoffeeScript
-if Meteor.isClient
-  	Template.pixi =
-  	    rendered :() ->
-              mypixi()
-            
-    
-    Template.gyro = 
-        rendered:()->
-            if window.DeviceOrientationEvent?
-                window.addEventListener 'deviceorientation', (eventdata) ->
-                    leftRightTilt = eventdata.gamma
-                    frontBackTilt = eventdata.beta
-                    compassdir = eventdata.alpha
-                    tiltListener leftRightTilt, frontBackTilt , compassdir
-                    return
-                , false
-            return
 
 @tiltListener = (LR,FB,compass) ->
     

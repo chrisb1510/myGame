@@ -9,37 +9,140 @@ if Meteor.isClient
 
 #HELPERS*******************************************************************
 #**************************************************************************
-
+#HELLO----------------------------------------------------------------------
+    Session.setDefault "counter", 0
     Template.hello.helpers
         greeting: () ->
     	    "Welcome to My Game."
-        
-    Template.hello.events = { 
-        "click input#tester":() ->
-                console.log "You pressed the cheese"
-                }	    
+        counter: () ->
+            return Session.get "counter"
     
+    Template.hello.events 
+        'click button': ()-> 
+            # increment the counter when button is clicked
+            Session.set("counter", Session.get("counter") + 1);
+
+#USERLIST-------------------------------------------------------------------
+   
     Template.Userlist.helpers
         defaultuser:()->
             user =  new User()
         Usersinsameroom:()->
             return Users.find({'profile.roomid':Session.get ('roomid') or "main"})
             
-                
+#CHATMESSAGELIST----------------------------------------------------------
 
-            
-               	
-            
     Template.Chatmessagelist.helpers
         defaultmessage:()->
             message = new Chatmessage().toJSONValue()
        
         messageslistbyroom:()->
            return Messages.find({'roomid':Session.get ('roomid') or "main"})
-            
+#GAMEBOARD---------------------------------------------------------------
     Template.GameBoard.helpers
         defaultboard:()->
             board =  new Board().toJSONValue() 
+    
+    Template.camera.events 
+        'click #snapshot': () ->
+            if localMediaStream?
+                video = document.querySelector 'video'
+                canvas = document.querySelector 'canvas'
+                canvas.width = 200
+                canvas.height = 200
+                canvas.display = "none"
+                ctx = canvas.getContext '2d'
+
+                ctx.drawImage video, 0, 0, 200, 200
+                document.querySelector 'img'
+                .src = canvas.toDataURL 'img/webp'
+
+#CAMERA------------------------------------------------------------
+
+    navigator.getUserMedia = navigator.getUserMedia or
+        navigator.webkitGetUserMedia or navigator.mozGetUserMedia or
+        navigator.msGetUserMedia
+    
+    if navigator.getUserMedia?
+        navigator.getUserMedia
+            video:
+                mandatory:
+                    maxHeight:200
+                    maxWidth:200
+        ,(@localMediaStream)->
+            video = document.querySelector 'video'
+            video.src = window.URL.createObjectURL @localMediaStream
+            video.play
+        ,(err)->
+            alert "this didnt work"+err
+    else
+        alert "getUserMedia not supported"
+
+    Template.pixicontainer.helpers
+        rendered :() ->
+            animate = ->
+                requestAnimFrame animate
+    
+                # change values in here
+                bunny.rotation += 0.1
+    
+                # render the stage   
+                renderer.render stage
+                return
+  
+            stage = new PIXI.Stage(0x66FF99)
+            # create a renderer instance.
+            renderer = PIXI.autoDetectRenderer(400, 300)
+            # add the renderer view element to the DOM
+            $("#pixistage").append renderer.view
+            requestAnimFrame animate
+            # create a texture from an image path
+            texture = PIXI.Texture.fromImage("img/bunny.png")
+            # create a new Sprite using the texture
+            bunny = new PIXI.Sprite(texture)
+            # center the sprites anchor point
+            bunny.anchor.x = 0.5
+            bunny.anchor.y = 0.5
+            # move the sprite t the center of the screen
+            bunny.position.x = 200
+            bunny.position.y = 150
+            stage.addChild bunny
+  
+    
+    Template.gyro.helpers
+        rendered:()->
+            @tiltListener = (LR,FB,compass) ->
+                ball = document.getElementById 'tiltdisplay'
+                console.log ball
+                cont = document.getElementById 'gyrocontainer'
+   
+                viewWidth = cont.offsetWidth
+                viewHeight = cont.offsetHeight
+    
+                if FB > 90 
+                    FB =  90
+                if FB < -90
+                    FB = -90
+                
+                LR += 90
+                FB += 90
+    
+                $("#output").html "beta : " + FB + 
+                    ": gamma: " + LR + ": compass:" + compass
+                
+                ball.style.top  = (viewHeight*FB/180) + "px";
+                ball.style.left = (viewWidth*LR/180) + "px";
+                return                      
+
+            if window.DeviceOrientationEvent?
+                window.addEventListener 'deviceorientation', (eventdata) ->
+                    leftRightTilt = eventdata.gamma
+                    frontBackTilt = eventdata.beta
+                    compassdir = eventdata.alpha
+                    tiltListener leftRightTilt, frontBackTilt , compassdir
+                    return
+                , false
+            return
                    
 #METHODS*******************************************************************
 #**************************************************************************
