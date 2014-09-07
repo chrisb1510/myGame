@@ -10,6 +10,7 @@
 <body>
     <!--{{> gyro}}-->
     {{> loginButtons }}
+    {{> camera}}
     {{> hello }}
     {{> Userlist }}
     {{> GameBoard }}
@@ -19,20 +20,32 @@
 </body>
 
 <template name="hello">
-
-    <h1>Hello World!</h1>
-    {{greeting}}
-    <input id="tester" type="button" value="Click" />
+<h1>Welcome to Meteor!</h1>
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
 </template>
+
+<template name="camera">
+    <div id="cameraContainer">
+        <video autoplay></video>
+        <img src/>
+    
+        <canvas style="display:none"></canvas>   
+    
+    <input id="snapshot" type="button" value="snapshot" />
+    </div>
+</template>
+
 <template name="pixi">
     <div id="pixistage">
         {{game}}
     </div>
-
 </template>
+
 <template name="Userlist">
     <p>{{ defaultuser}}</p>
 </template>
+
 <template name="GameBoard">
     <p>{{defaultboard}}</p>
 </template>

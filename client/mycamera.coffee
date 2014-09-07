@@ -2,23 +2,24 @@ if Meteor.isClient
   # counter starts at 0
   Session.setDefault "counter", 0
 
-  Template.hello.helpers
+  Template.hello.helpers =
     counter: () ->
       return Session.get "counter"
     
 
-  Template.hello.events
+  Template.hello.events =
     'click button': ()-> 
       # increment the counter when button is clicked
       Session.set("counter", Session.get("counter") + 1);
   
-  Template.camera.events
+  Template.camera.events =
     'click #snapshot': () ->
         if localMediaStream?
             video = document.querySelector 'video'
             canvas = document.querySelector 'canvas'
-            canvas.width = 640
-            canvas.height = 360
+            canvas.width = 200
+            canvas.height = 200
+            canvas.display = "none"
             ctx = canvas.getContext '2d'
 
             ctx.drawImage video, 0, 0, 200, 200
@@ -33,8 +34,8 @@ if Meteor.isClient
     navigator.getUserMedia
       video:
         mandatory:
-          maxHeight:640
-          maxWidth:360
+          maxHeight:200
+          maxWidth:200
     ,(@localMediaStream)->
       video = document.querySelector 'video'
       video.src = window.URL.createObjectURL @localMediaStream

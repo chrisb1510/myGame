@@ -1,6 +1,3 @@
-// style.less file
-
-
 @import "../../../less-bootstrap-3/lib/less/bootstrap.import.less";
 @import "../../../less-fontawesome-4/lib/less/font-awesome.import.less";
 
@@ -27,3 +24,23 @@ body{
         background:#4cff00;
     }
 }
+#cameraContainer{
+    width:90vw;
+    height:100vh;
+    canvas{
+        height:0;
+        width:0;
+        display: none;
+    }
+    img{
+        display: inline-block;
+        box-sizing:border-box;
+        vertical-align: top;
+    }
+    video{
+        display:inline-block;
+    
+    }
+    
+}
+
