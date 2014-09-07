@@ -1,11 +1,11 @@
 ﻿# CoffeeScript
 if Meteor.isClient
-  	Template.pixi
+  	Template.pixi =
   	    rendered :() ->
               mypixi()
             
     
-    Template.gyro
+    Template.gyro = 
         rendered:()->
             if window.DeviceOrientationEvent?
                 window.addEventListener 'deviceorientation', (eventdata) ->

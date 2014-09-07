@@ -1,8 +1,11 @@
-/chai
-/munit
-/sinon
-/myGame
-/less-bootstrap-3
 /less-fontawesome-4
-/mypackage
 /phaserio
+/sinon
+/less-bootstrap-3
+/mypackage
+/main
+/munit
+/pixijs
+/myGame
+/chatrooms
+/chai
