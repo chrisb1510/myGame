@@ -9,14 +9,18 @@
 
 <body>
     {{> gyro}}
-    {{> loginButtons }}
-    {{> camera }}          
+    {{#if currentUser}}
+        {{> loginButtons }}
+    {{/if}}
+
+    {{> camera }}
+
     {{> hello }}
-    <!--    {{> pixicontainer}}    -->
-    <!--    {{> GameBoard }}       -->
-    <!--    {{> Chatmessagelist }} -->
-    <!--    {{> Userlist }}        -->
-    <!--    {{> Mainchatroom }}    -->
+        {{> pixicontainer}}    
+        {{> GameBoard }}       
+        {{> Chatmessagelist }} 
+       {{> Userlist }}        
+       {{> Mainchatroom }}    
 </body>
 
 <template name="hello">

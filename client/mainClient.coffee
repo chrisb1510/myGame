@@ -1,19 +1,25 @@
+
 if Meteor.isClient
+    Accounts.ui.config
+        passwordSignupFields: 'USERNAME_ONLY'
+
+    
 #**************************************************************************
 #subscriptions
-
-    Meteor.subscribe 'chatmessages'
-    Meteor.subscribe 'myusers'
-    Meteor.subscribe 'myboards'
-    Meteor.subscribe 'myplayers'
+    Deps.autorun () ->
+        Meteor.subscribe 'chatmessages'
+        Meteor.subscribe 'myusers'
+        Meteor.subscribe 'myboards'
+        Meteor.subscribe 'myplayers'
 
 #HELPERS*******************************************************************
 #**************************************************************************
+
 #HELLO----------------------------------------------------------------------
     Session.setDefault "counter", 0
     Template.hello.helpers
         greeting: () ->
-    	    "Welcome to My Game."
+            console.log "Welcome to My Game."
         counter: () ->
             return Session.get "counter"
     
@@ -22,15 +28,18 @@ if Meteor.isClient
             # increment the counter when button is clicked
             Session.set("counter", Session.get("counter") + 1);
 
-#USERLIST-------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+#USERLIST-------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
    
     Template.Userlist.helpers
         defaultuser:()->
             user =  new User()
         Usersinsameroom:()->
             return Users.find({'profile.roomid':Session.get ('roomid') or "main"})
-            
-#CHATMESSAGELIST----------------------------------------------------------
+#---------------------------------------------------------------------------------------------            
+#CHATMESSAGELIST------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
 
     Template.Chatmessagelist.helpers
         defaultmessage:()->
@@ -38,10 +47,16 @@ if Meteor.isClient
        
         messageslistbyroom:()->
            return Messages.find({'roomid':Session.get ('roomid') or "main"})
-#GAMEBOARD---------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+#GAMEBOARD------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+
     Template.GameBoard.helpers
         defaultboard:()->
             board =  new Board().toJSONValue() 
+#---------------------------------------------------------------------------------------------
+#CAMERA---------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
     
     Template.camera.events 
         'click #snapshot': () ->
@@ -57,26 +72,29 @@ if Meteor.isClient
                 document.querySelector 'img'
                 .src = canvas.toDataURL 'img/webp'
 
-#CAMERA------------------------------------------------------------
-
-    navigator.getUserMedia = navigator.getUserMedia or
-        navigator.webkitGetUserMedia or navigator.mozGetUserMedia or
-        navigator.msGetUserMedia
+    Template.camera.helpers
+        rendered : () ->
+            navigator.getUserMedia = navigator.getUserMedia or
+                navigator.webkitGetUserMedia or navigator.mozGetUserMedia or
+                navigator.msGetUserMedia
     
-    if navigator.getUserMedia?
-        navigator.getUserMedia
-            video:
-                mandatory:
-                    maxHeight:200
-                    maxWidth:200
-        ,(@localMediaStream)->
-            video = document.querySelector 'video'
-            video.src = window.URL.createObjectURL @localMediaStream
-            video.play
-        ,(err)->
-            alert "this didnt work"+err
-    else
-        alert "getUserMedia not supported"
+            if navigator.getUserMedia?
+                navigator.getUserMedia
+                    video:
+                        mandatory:
+                            maxHeight:200
+                            maxWidth:200
+                ,(@localMediaStream)->
+                    video = document.querySelector 'video'
+                    video.src = window.URL.createObjectURL @localMediaStream
+                    video.play
+                ,(err)->
+                    alert "this didnt work"+err
+            else
+                alert "getUserMedia not supported"
+#---------------------------------------------------------------------------------------------
+#PIXIJS---------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
 
     Template.pixicontainer.helpers
         rendered :() ->
@@ -107,11 +125,13 @@ if Meteor.isClient
             bunny.position.x = 200
             bunny.position.y = 150
             stage.addChild bunny
-  
-    
+
+#---------------------------------------------------------------------------------------------
+#TILT CONTROL--------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
     Template.gyro.helpers
         rendered:()->
-            @tiltListener = (LR,FB,compass) ->
+            tiltListener = (LR,FB,compass) ->
                 ball = document.getElementById 'tiltdisplay'
                 console.log ball
                 cont = document.getElementById 'gyrocontainer'
@@ -146,16 +166,16 @@ if Meteor.isClient
                    
 #METHODS*******************************************************************
 #**************************************************************************
-
-    Meteor.methods
     
+    
+    Meteor.methods
         insertuser:(user)->
-            Users.insert user, (err,res)->
-                if err?
-                    console.log "#{ err }"
-                else
-                    console.log res
-                    return res
+            console.log user
+            
+
+                    
+                    
+        
         #-------------------------------------------------------            
         insertchatmessage:(chatmessage)->
             Messages.insert chatmessage, (err,res)->
@@ -239,7 +259,7 @@ console.log {Message1,Message2,defaultMessage}
 
 
 @defaultboard = new Board()
-console.log @board
+console.log @defaultboard
 
 @inserttest = ()->
     #test inserts        
@@ -289,4 +309,4 @@ console.log @board
             true
     console.log "users inserted: "+Users.find().fetch()
     console.log "Messages inserted"+Messages.find().fetch()
-inserttest()
+#inserttest()

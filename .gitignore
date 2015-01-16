@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-packages/main/client/CoffeeScript.js
-packages/main/client/CoffeeScript.min.js
-packages/main/client/CoffeeScript.min.js.map
-App_Data/PublishProfiles/chris.pubxml
-website.publishproj
-=======
-.meteor
 
->>>>>>> 3512af2acfd9ae292a98adc57a0f6736973e49eb
+
+.meteor
+node_modules
+.idea

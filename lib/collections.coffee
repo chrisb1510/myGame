@@ -21,10 +21,7 @@ Boards.allow
 
 
 #USERS************************************************************************
-@Users = new Meteor.Collection 'myusers',
-    transform:(doc)->
-        new User(doc)
-
+@Users = Meteor.users
 #PERMISSIONS-----------------------------
 Users.allow
     insert:(doc)->
@@ -33,6 +30,8 @@ Users.allow
         return true
     remove:(doc)->
         return true
+    transform:(doc)->
+        new User(doc)
 
 #MESSAGES*********************************************************************
 @Messages = new Meteor.Collection 'chatmessages',
@@ -194,6 +193,7 @@ class @Profile
         @gameslost   ?= 0
         @gameswon    ?= 0
         @roomid      ?= "main"
+
 #**************************************************************************
 #EJSON definitions
 #**************************************************************************
@@ -226,10 +226,12 @@ class @Profile
 #*******************************************************************************
 #*******************************************************************************     
 class @User 
+    @USERCOUNT : 0
+
     constructor:({@_id,@username,@password,@profile}={})->
         @typeName  = "User"
         @_id      ?= Meteor.uuid()
-        @username ?= 1
+        @username ?= "AnonUser"+ (User.USERCOUNT+=1)
         @password ?= "default"
         @profile  ?=  new Profile()  
         
@@ -243,7 +245,9 @@ class @User
         switch which
           when "both" then console.log "wins: #{ @profile.gameswon }, losses #{ @profile.gameslost }"
           when "won" then  console.log "won" +@profile.gameswon
-          when "lost" then console.log "lost"+@profile.gameslost 
+          when "lost" then console.log "lost"+@profile.gameslost
+    inserttoDB:()=>
+        Accounts.createUser @
 #**************************************************************************
 #EJSON definitions
 #**************************************************************************
